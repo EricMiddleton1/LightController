@@ -6,8 +6,9 @@ SoundToColor::SoundToColor(WindowManager *window, float x, float y, float width,
 	this->spectrum = spectrum;
 	
 	filterStrength = 0.;
-	bassEnd = 200;
-	noiseFloor = 50;
+	bassFreq = 150;
+	trebbleFreq = 6800;
+	noiseFloor = 70;
 	bassBoost = 10.;
 
 	auto cbLambda = [this](std::vector<FrequencyBin> const& l, std::vector<FrequencyBin> const& r) {
@@ -61,100 +62,49 @@ void SoundToColor::Draw(HDC hdc, int scrWidth, int scrHeight) {
 
 void SoundToColor::SetColors() {
 	auto bins = spectrum->GetLeftSpectrum();
-	int bassIndex = 0;
+	int bassIndex = -1, trebbleIndex = -1;
 	double m, b;
 
 	frequencyColors.clear();
 
+	//for (int i = 0; i < bins.size(); i++) {
+	//	float hue = (3 * i / (bins.size())) * 360.f / 3.f;
+	//	frequencyColors.push_back(Color::HSV(hue, 1., 1.));
+	//}
+
+	//return;
+
 	for (int i = 0; i < bins.size(); i++) {
-		if (bins[i].GetEndFrequency() >= bassEnd) {
+		if (bassIndex == -1 && bins[i].GetEndFrequency() >= bassFreq) {
 			bassIndex = i + 1;
+		}
+		if (trebbleIndex == -1 && bins[i].GetEndFrequency() >= trebbleFreq) {
+			trebbleIndex = i + 1;
 			break;
 		}
 	}
 
-	if (bassIndex == 0)
-		bassIndex = bins.size();
+	if (bassIndex < 0)
+		bassIndex = 0;
+	if (trebbleIndex <= bassIndex)
+		trebbleIndex = bassIndex + 1;
 
-	m = (bassIndex > 1) ? (30. / (bassIndex - 1)) : 0;
-	b = 0.;
 	for (int i = 0; i < bassIndex; i++) {
-		float hue = m*i + b;
-
-		frequencyColors.push_back(Color::HSL(hue, 1., 0.5));
+		frequencyColors.push_back(Color::HSV(0.f, 1.f, 1.f));
 	}
 
-	m = ((bins.size() - bassIndex) > 0) ? (210. / (bins.size() - bassIndex)) : 0;
-	b = 30.;
-	for (int i = bassIndex; i < bins.size(); i++) {
-		float hue = (i - bassIndex + 1)*m + b;
+	m = 240.f / (trebbleIndex - bassIndex);
+	for (int i = bassIndex; i < trebbleIndex; i++) {
+		frequencyColors.push_back(Color::HSV((i - bassIndex)*m, 1.f, 1.f));
+	}
 
-		frequencyColors.push_back(Color::HSL(hue, 1., 0.5));
+	for (int i = trebbleIndex; i < bins.size(); i++) {
+		frequencyColors.push_back(Color::HSV(240.f, 1.f, 1.f));
 	}
 }
 
 void SoundToColor::SpectrumCallback(std::vector<FrequencyBin> const& lFreq, std::vector<FrequencyBin> const& rFreq) {
-	//static std::vector<double> noise;
-	//static bool first = true;
-	//static double avg = 0.;
-
 	auto mono = spectrum->GetMonoSpectrum();
-	//static float average = 1.;
-	//float r = 0, g = 0, b = 0, level = 0.;
-	//Color c;
-	//int count = lFreq.size();
-	////float max = -1000000;
-	//double biggest, scale;
-
-	//scale = 1. / (50 * mono.size());
-
-	//avg = 0.5*avg + 0.5*AverageDB(mono);
-
-	////std::cout << avg << std::endl;
-
-	//if (first) {
-	//	first = false;
-
-	//	for (auto &bin : lFreq) {
-	//		double db = bin.GetMagnitudeDB() + noiseFloor;
-	//		noise.push_back((db > 0) ? db : 0);
-	//	}
-	//}
-
-	//for (int i = 0; i < lFreq.size() && i < frequencyColors.size(); i++) {
-	//	Color cFreq = frequencyColors[i];
-	//	double db = mono[i].GetMagnitudeDB() + noiseFloor - avg;// -noise[i];
-
-	//	if (mono[i].GetStartFrequency() <= bassEnd)
-	//		db += bassBoost;
-
-	//	if (db < 0)
-	//		db = 0;
-
-	//	db *= (1 + avg/2);
-
-	//	r += db*cFreq.GetRed();
-	//	g += db*cFreq.GetGreen();
-	//	b += db*cFreq.GetBlue();
-	//}
-
-	//r *= scale;
-	//g *= scale;
-	//b *= scale;
-
-	//biggest = max(r, max(g, b));
-
-	//std::cout << biggest << "\n";
-
-	//if (biggest > 255) {
-	//	biggest /= 255;
-
-	//	r /= biggest;
-	//	g /= biggest;
-	//	b /= biggest;
-	//}
-
-	//leftColor = Color(r, g, b);
 
 	leftColor = RenderColor(lFreq);
 	rightColor = RenderColor(rFreq);
@@ -164,7 +114,7 @@ void SoundToColor::SpectrumCallback(std::vector<FrequencyBin> const& lFreq, std:
 	std::vector<double> graphValues;
 
 	for (int i = 0; i < lFreq.size(); i++) {
-		graphValues.push_back(mono[i].GetMagnitudeDB());// -noise[i]);
+		graphValues.push_back(mono[i].GetMagnitudeDB());
 	}
 
 	graph->UpdateGraph(graphValues);
@@ -182,7 +132,7 @@ Color SoundToColor::RenderColor(const std::vector<FrequencyBin>& bins) const {
 		Color cFreq = frequencyColors[i];
 		double db = bins[i].GetMagnitudeDB() + noiseFloor - avg;
 
-		if (bins[i].GetStartFrequency() <= bassEnd)
+		if (bins[i].GetStartFrequency() <= bassFreq)
 			db += bassBoost;
 
 		if (db < 0)
@@ -209,14 +159,17 @@ Color SoundToColor::RenderColor(const std::vector<FrequencyBin>& bins) const {
 		b /= biggest;
 	}
 
-	return Color(r, g, b);
+	Color c(r, g, b);
+	float h = c.GetHue(), s = c.GetHSVSaturation(), v = c.GetValue();
+
+	return Color::HSV(h, max(0.8, s), v);
 }
 
 Color SoundToColor::RenderBassColor(const std::vector<FrequencyBin>& bins) const {
 	double r = 0, g = 0, b = 0, biggest, scale, avg;
 	int count = bins.size();
 
-	scale = 1. / 50;// (50 * count);
+	scale = 1. / 50;
 
 	avg = AverageDB(bins);
 

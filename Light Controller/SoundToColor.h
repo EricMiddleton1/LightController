@@ -7,6 +7,7 @@
 #include <vector>
 #include <functional>
 #include <memory>
+#include <algorithm>
 
 typedef std::function<void(Color const&, Color const&)> StCCallback;
 
@@ -42,7 +43,7 @@ protected:
 	std::vector<Color> frequencyColors;
 	
 	double filterStrength;
-	double bassEnd;
+	double bassFreq, trebbleFreq;
 	double noiseFloor;
 	double bassBoost;
 };

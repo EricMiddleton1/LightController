@@ -53,11 +53,11 @@ int main() {
 	RecordingDevice recorder(4, 4092, 48000);
 	WindowManager window("LightControl", "Light Controller", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0);
 	
-	StripModeDissipate stripMode(FRONT_PIXEL_COUNT, 10, 100);
+	StripModeDissipate stripMode(FRONT_PIXEL_COUNT, 10, 50);
 	StripModeSolid solidMode(FRONT_PIXEL_COUNT, Color(0, 0, 0));
 
 	Background background(Color(0, 0, 0));
-	SpectrumAnalyzer spectrum(&recorder, 30., 20000., 2);
+	SpectrumAnalyzer spectrum(&recorder, 30., 20000., 3);
 	SoundToColor soundColor(&window, 0.1, 0.1, 0.8, 0.8, &spectrum);
 
 	window.AddDrawable(&background);

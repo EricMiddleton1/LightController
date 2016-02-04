@@ -32,10 +32,13 @@ public:
 	void SetBlue(byte blue);
 
 	float GetHue();
-	float GetSaturation();
+	float GetHSLSaturation();
 	float GetLightness();
 
-	void SetLightness(float lightness);
+	float GetHSVSaturation();
+	float GetValue();
+
+	void SetSaturation(float value);
 
 	void Print();
 
@@ -43,6 +46,7 @@ public:
 
 	static Color ColorWheel(float pos);
 	static Color HSL(float hue, float saturation, float lightness);
+	static Color HSV(float hue, float saturation, float value);
 
 private:
 	int r, g, b;
