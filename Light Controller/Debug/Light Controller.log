@@ -1,0 +1,30 @@
+﻿Build started 2/1/2016 2:30:50 PM.
+     1>Project "\\iastate.edu\engr\users\ericm\Documents\Projects\Light Controller\Light Controller\Light Controller.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"\\iastate.edu\engr\users\ericm\Documents\Projects\Light Controller\Light Controller\kiss_fft130" /ZI /nologo /W3 /WX- /Od /Oy- /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
+         Source.cpp
+     1>\\iastate.edu\engr\users\ericm\documents\projects\light controller\light controller\spectrum.h(37): warning C4244: 'initializing' : conversion from 'double' to 'const int', possible loss of data
+     1>\\iastate.edu\engr\users\ericm\documents\projects\light controller\light controller\source.cpp(61): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>\\iastate.edu\engr\users\ericm\documents\projects\light controller\light controller\source.cpp(110): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>\\iastate.edu\engr\users\ericm\documents\projects\light controller\light controller\source.cpp(113): warning C4154: deletion of an array expression; conversion to pointer supplied
+     1>\\iastate.edu\engr\users\ericm\documents\projects\light controller\light controller\source.cpp(49): warning C4101: 'timerFrequency' : unreferenced local variable
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\iastate.edu\engr\users\ericm\Documents\Projects\Light Controller\Debug\Light Controller.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"\\iastate.edu\engr\users\ericm\Documents\Projects\Light Controller\Debug\Light Controller.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\iastate.edu\engr\users\ericm\Documents\Projects\Light Controller\Debug\Light Controller.lib" /MACHINE:X86 Debug\BarGraph.obj
+         Debug\Color.obj
+         Debug\Drawable.obj
+         Debug\Drawables.obj
+         Debug\kiss_fft.obj
+         Debug\RecordingDevice.obj
+         Debug\SoundToColor.obj
+         Debug\StripModes.obj
+         Debug\LightStrip.obj
+         Debug\SerialPort.obj
+         Debug\Source.obj
+         Debug\Spectrum.obj
+         Debug\WindowManager.obj
+         Light Controller.vcxproj -> \\iastate.edu\engr\users\ericm\Documents\Projects\Light Controller\Debug\Light Controller.exe
+     1>Done Building Project "\\iastate.edu\engr\users\ericm\Documents\Projects\Light Controller\Light Controller\Light Controller.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.99
