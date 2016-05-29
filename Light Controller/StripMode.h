@@ -15,6 +15,10 @@ public:
 	virtual void GetRawColors(unsigned char colors[]) {
 		strip->DumpColors(colors);
 	}
+
+	LightStrip* GetStrip() {
+		return strip.get();
+	}
 protected:
 	std::unique_ptr<LightStrip> strip;
 	bool started;

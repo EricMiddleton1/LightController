@@ -130,10 +130,13 @@ void RecordingDevice::ProcessBuffer(short* buffer, int byteCount) {
 		leftSamples.resize(bufferSize - (shortCount >> 1));
 		rightSamples.resize(bufferSize - (shortCount >> 1));
 	}
+	int i;
 
-	for (int i = 0; i < shortCount; i += 2) {
+	for (i = 0; i < shortCount; i += 2) {
 		leftSamples.push_back(buffer[i]);
 		rightSamples.push_back(buffer[i + 1]);
+
+		//std::cout << i << ": " << leftSamples.size() << std::endl;
 	}
 }
 
