@@ -1,6 +1,7 @@
 #include "SoundToColor.h"
 #include <iostream>
 
+
 SoundToColor::SoundToColor(WindowManager *window, float x, float y, float width, float height, SpectrumAnalyzer *spectrum) :
 				Drawable(window, x, y, width, height) {
 	this->spectrum = spectrum;
@@ -121,12 +122,22 @@ void SoundToColor::SpectrumCallback(std::vector<FrequencyBin> const& lFreq, std:
 }
 
 Color SoundToColor::RenderColor(const std::vector<FrequencyBin>& bins) const {
-	double r = 0, g = 0, b = 0, biggest, scale, avg;
+	double r = 0, g = 0, b = 0, biggest, scale;
 	int count = bins.size();
+	static Color lastColor;
+	static double limiter = 0., avg = 0;
 
-	scale = 1. / (50 * count);
+	scale = 1. / (50 * count); //50
 
-	avg = AverageDB(bins);
+	double curAvg = AverageDB(bins);
+
+	if (avg > curAvg) {
+		avg -= min(0.2, avg - curAvg);
+	}
+	else {
+		avg = curAvg;
+	}
+	
 
 	for (int i = 0; i < count && i < frequencyColors.size(); i++) {
 		Color cFreq = frequencyColors[i];
@@ -138,7 +149,7 @@ Color SoundToColor::RenderColor(const std::vector<FrequencyBin>& bins) const {
 		if (db < 0)
 			db = 0;
 
-		db *= (1 + avg / 2);
+		db *= (1 + curAvg / 2);
 
 		r += db*cFreq.GetRed();
 		g += db*cFreq.GetGreen();
@@ -151,18 +162,35 @@ Color SoundToColor::RenderColor(const std::vector<FrequencyBin>& bins) const {
 
 	biggest = max(r, max(g, b));
 
-	if (biggest > 255) {
-		biggest /= 255;
-
-		r /= biggest;
-		g /= biggest;
-		b /= biggest;
+	if (biggest < limiter) {
+		limiter -= min(0.1, limiter - biggest);
+	}
+	else {
+		limiter = biggest;
 	}
 
-	Color c(r, g, b);
+	if (limiter > 255) {
+		double scale = 255. / limiter;
+
+		r *= scale;
+		g *= scale;
+		b *= scale;
+	}
+
+	Color c = Color(r, g, b).gammaCorrected();
 	float h = c.GetHue(), s = c.GetHSVSaturation(), v = c.GetValue();
 
-	return Color::HSV(h, max(0.8, s), v);
+	//kc = Color::HSV(h, max(0.5, s), v);
+
+	//Filter the color
+	c.Filter(lastColor, 0.8);
+
+	//Save current color
+	lastColor = c;
+
+	std::cout << avg << '\n';
+
+	return c;
 }
 
 Color SoundToColor::RenderBassColor(const std::vector<FrequencyBin>& bins) const {
@@ -218,4 +246,8 @@ double SoundToColor::AverageDB(const std::vector<FrequencyBin>& spectrum) const 
 	}
 
 	return sum / spectrum.size();
+}
+
+BarGraph* SoundToColor::getGraph() {
+	return graph.get();
 }

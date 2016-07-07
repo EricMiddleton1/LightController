@@ -26,6 +26,9 @@ public:
 	void SetCallback(StCCallback cb);
 
 	virtual void Draw(HDC hdc, int scrWidth, int scrHeight) override;
+
+	BarGraph* getGraph();
+
 protected:
 	void SpectrumCallback(std::vector<FrequencyBin> const& lFreq, std::vector<FrequencyBin> const& rFreq);
 	

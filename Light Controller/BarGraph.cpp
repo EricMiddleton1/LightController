@@ -24,12 +24,20 @@ void BarGraph::UpdateGraph(std::vector<double> values, bool redraw) {
 			if (difference >= 0)
 				this->values[i] = values[i];
 			else
-				this->values[i] += max(-1, difference);
+				this->values[i] += max(-2, difference);
 		}
 	}
 
 	if (redraw)
 		window->ForceDraw();
+}
+
+std::vector<double> BarGraph::getValues() {
+	return values;
+}
+
+std::vector<Color> BarGraph::getColors() {
+	return colors;
 }
 
 void BarGraph::SetColors(std::vector<Color> &colors) {

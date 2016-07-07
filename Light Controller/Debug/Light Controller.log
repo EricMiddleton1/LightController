@@ -1,36 +1,13 @@
-﻿Build started 5/14/2016 9:27:24 PM.
-     1>Project "C:\Users\Ercle\Documents\Projects\LightController\Light Controller\Light Controller.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\users\Ercle\Documents\Projects\LightController\Light Controller\kiss_fft130" /ZI /nologo /W3 /WX- /Od /Oy- /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
-         Source.cpp
-         Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
-         - add -D_WIN32_WINNT=0x0501 to the compiler command line; or
-         - add _WIN32_WINNT=0x0501 to your project's Preprocessor Definitions.
-         Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target).
-     1>c:\users\ercle\documents\projects\lightcontroller\light controller\spectrum.h(37): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
-     1>c:\users\ercle\documents\projects\lightcontroller\light controller\spectrum.h(37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-     1>c:\users\ercle\documents\projects\lightcontroller\light controller\source.cpp(80): warning C4305: 'argument': truncation from 'double' to 'float'
-     1>c:\users\ercle\documents\projects\lightcontroller\light controller\source.cpp(110): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\ercle\documents\projects\lightcontroller\light controller\source.cpp(64): warning C4101: 'timerFrequency': unreferenced local variable
-     1>c:\users\ercle\documents\projects\lightcontroller\light controller\source.cpp(62): warning C4101: 'comPort': unreferenced local variable
-     1>c:\users\ercle\documents\projects\lightcontroller\light controller\source.cpp(98): warning C4101: 'receiveByte': unreferenced local variable
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ercle\Documents\Projects\LightController\Debug\Light Controller.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files\boost\boost_1_60_0\stage\lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Ercle\Documents\Projects\LightController\Debug\Light Controller.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ercle\Documents\Projects\LightController\Debug\Light Controller.lib" /MACHINE:X86 Debug\BarGraph.obj
-         Debug\Color.obj
-         Debug\Drawable.obj
-         Debug\Drawables.obj
-         Debug\kiss_fft.obj
-         Debug\RecordingDevice.obj
-         Debug\SoundToColor.obj
-         Debug\StripModes.obj
-         Debug\LightStrip.obj
-         Debug\SerialPort.obj
-         Debug\Source.obj
-         Debug\Spectrum.obj
-         Debug\WindowManager.obj
-         Light Controller.vcxproj -> C:\Users\Ercle\Documents\Projects\LightController\Debug\Light Controller.exe
-     1>Done Building Project "C:\Users\Ercle\Documents\Projects\LightController\Light Controller\Light Controller.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:01.78
+﻿  Source.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0501 to the compiler command line; or
+  - add _WIN32_WINNT=0x0501 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target).
+c:\users\media\documents\github\lightcontroller\light controller\spectrum.h(37): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+c:\users\media\documents\github\lightcontroller\light controller\source.cpp(90): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\media\documents\github\lightcontroller\light controller\source.cpp(130): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
+c:\users\media\documents\github\lightcontroller\light controller\source.cpp(175): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\media\documents\github\lightcontroller\light controller\source.cpp(70): warning C4101: 'timerFrequency': unreferenced local variable
+c:\users\media\documents\github\lightcontroller\light controller\source.cpp(68): warning C4101: 'comPort': unreferenced local variable
+c:\users\media\documents\github\lightcontroller\light controller\source.cpp(115): warning C4101: 'receiveByte': unreferenced local variable
+  Light Controller.vcxproj -> C:\Users\Media\Documents\GitHub\LightController\Debug\Light Controller.exe

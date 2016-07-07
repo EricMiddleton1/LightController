@@ -25,6 +25,8 @@ public:
 	byte GetGreen();
 	byte GetBlue();
 
+	Color gammaCorrected();
+
 	int GetLargestComponent(byte *component);
 
 	void SetRed(byte red);

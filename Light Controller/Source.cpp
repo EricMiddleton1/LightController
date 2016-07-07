@@ -9,6 +9,9 @@
 #include "BarGraph.h"
 #include "Drawables.h"
 #include "SoundToColor.h"
+#include "LEDMatrix.hpp"
+#include "DisplayEffect.hpp"
+
 #include <cmath>
 #include <iostream>
 #include <vector>
@@ -27,6 +30,9 @@
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
+
+
+
 
 __int64 GetTimerFrequency() {
 	__int64 freq;
@@ -54,7 +60,7 @@ double EllapsedMillis(__int64 timer) {
 }
 
 int InitStrip(boost::asio::ip::udp::socket& socket, boost::asio::ip::udp::endpoint& endpoint);
-void UpdateStrip(boost::asio::ip::udp::socket& socket, boost::asio::ip::udp::endpoint& endpoint, StripMode &strip, int ledCount);
+void UpdateStrip(boost::asio::ip::udp::socket& socket, boost::asio::ip::udp::endpoint& endpoint, LightStrip *strip, int ledCount);
 
 boost::asio::io_service ioService;
 
@@ -96,6 +102,13 @@ int main() {
 
 	window.Start();
 	float hue = 0.;
+
+	//LightStrip display(32 * 24);
+	LEDMatrix display(32, 24);
+	
+	double xPos = display.getWidth() / 2;
+	double xDir = 0;// 0.5;
+
 	while (1) {
 		static int tick = 0;
 		
@@ -108,7 +121,55 @@ int main() {
 		window.Update();
 
 		//UpdateStrip(socket, endpoint, stripMode, ledCount);
-		UpdateStrip(socket, endpoint, solidMode, ledCount);
+		//UpdateStrip(socket, endpoint, solidMode.GetStrip(), ledCount);
+
+		//Update graph
+		auto values = soundColor.getGraph()->getValues();
+		auto colors = soundColor.getGraph()->getColors();
+
+		updateDisplay(display, soundColor.GetMonoColor(), xPos, display.getHeight()/2, true);
+		//renderField(display, soundColor.GetMonoColor(), xPos, display.getHeight() / 2);
+
+		xPos += xDir;
+
+		if (xPos >= display.getWidth()*3/4 || xPos < display.getWidth()/4) {
+			xDir *= -1;
+		}
+
+		/*
+		display.clear();
+
+		for (int x = 0; x < values.size(); x += 3) {
+			double top = 0;
+
+			int max = std::min((int)values.size(), x + 3);
+			for (int temp = x; temp < max; temp++) {
+				top += std::max(23 - (values[temp - (temp % 2)] + 70) * 0.4, 0.);
+			}
+
+			top /= (max - x);
+
+			if (top < 0)
+				top = 0;
+
+			for (int i = 0; i < 2; ++i) {
+				int xx = x + i;
+				int scrX = xx + 2;
+
+				//auto raw = colors[x];
+
+				auto raw = Color::HSV(240.f * ((1. + x) / values.size()), 1.f, 1.f).gammaCorrected();
+
+				for (int y = 23; y >= top; y--) {
+					//int index = (y % 2) ? (32 * y + 31 - scrX) : (32 * y + scrX);
+					//display.Set(index, c);
+					display.setPixel(scrX, y, raw);
+				}
+			}
+		}
+		*/
+
+		UpdateStrip(socket, endpoint, display.getStrip().get(), 32 * 24);
 
 		hue += 1.;
 		hue = std::fmod(hue, 360.);
@@ -153,11 +214,11 @@ int InitStrip(boost::asio::ip::udp::socket& socket, boost::asio::ip::udp::endpoi
 	return ledCount;
 }
 
-void UpdateStrip(boost::asio::ip::udp::socket& socket, boost::asio::ip::udp::endpoint& endpoint, StripMode &strip, int ledCount) {
+void UpdateStrip(boost::asio::ip::udp::socket& socket, boost::asio::ip::udp::endpoint& endpoint, LightStrip *rawStrip, int ledCount) {
 	unsigned char *colors = new unsigned char[ledCount * 3];
 
 	//strip.GetRawColors(colors);
-	auto rawStrip = strip.GetStrip();
+	//auto rawStrip = strip.GetStrip();
 
 	std::vector<unsigned char> vec;
 

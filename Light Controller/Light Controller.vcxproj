@@ -40,13 +40,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <SourcePath>
-    </SourcePath>
-    <IncludePath>C:\Program Files\boost\boost_1_60_0;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>C:\Users\Media\Documents\GitHub\LightController\Light Controller\kiss_fft130</SourcePath>
+    <IncludePath>C:\Users\Media\Documents\GitHub\LightController\Light Controller\kiss_fft130;C:\Program Files\boost\boost_1_60_0;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <SourcePath>C:\Users\Ercle\Documents\Projects\Light Controller\Light Controller\kiss_fft130</SourcePath>
-    <IncludePath>C:\Program Files\boost\boost_1_60_0;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>C:\Users\Media\Documents\GitHub\LightController\Light Controller\kiss_fft130</SourcePath>
+    <IncludePath>C:\Users\Media\Documents\GitHub\LightController\Light Controller\kiss_fft130;C:\Program Files\boost\boost_1_60_0;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -80,9 +79,11 @@
     <ClInclude Include="AudioDevice.h" />
     <ClInclude Include="BarGraph.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="DisplayEffect.hpp" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="Drawables.h" />
     <ClInclude Include="kiss_fft130\kiss_fft.h" />
+    <ClInclude Include="LEDMatrix.hpp" />
     <ClInclude Include="RecordingDevice.h" />
     <ClInclude Include="SoundToColor.h" />
     <ClInclude Include="StripModes.h" />
@@ -95,9 +96,11 @@
   <ItemGroup>
     <ClCompile Include="BarGraph.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="DisplayEffect.cpp" />
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="Drawables.cpp" />
     <ClCompile Include="kiss_fft130\kiss_fft.c" />
+    <ClCompile Include="LEDMatrix.cpp" />
     <ClCompile Include="RecordingDevice.cpp" />
     <ClCompile Include="SoundToColor.cpp" />
     <ClCompile Include="StripModes.cpp" />

@@ -14,6 +14,9 @@ public:
 	~BarGraph();
 
 	void UpdateGraph(std::vector<double> values, bool redraw = true);
+
+	std::vector<double> getValues();
+	std::vector<Color> getColors();
 	
 	void SetColors(std::vector<Color> &colors);
 	void SetLabels(std::vector<std::string> &labelStrings);

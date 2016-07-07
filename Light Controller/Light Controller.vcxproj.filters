@@ -57,6 +57,12 @@
     <ClInclude Include="kiss_fft130\kiss_fft.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LEDMatrix.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DisplayEffect.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SerialPort.cpp">
@@ -96,6 +102,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="kiss_fft130\kiss_fft.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LEDMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
