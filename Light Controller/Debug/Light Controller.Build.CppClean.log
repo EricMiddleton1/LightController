@@ -1,28 +1,31 @@
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\vc140.pdb
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\vc140.idb
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\bargraph.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\color.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\drawable.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\drawables.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\recordingdevice.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\lightstrip.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\serialport.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\windowmanager.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\soundtocolor.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\stripmodes.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\spectrum.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\source.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\kiss_fft.obj
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\vc120.idb
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\vc120.pdb
-c:\users\ercle\documents\projects\lightcontroller\debug\light controller.pdb
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\light controller.tlog\cl.command.1.tlog
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\light controller.tlog\cl.read.1.tlog
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\light controller.tlog\cl.write.1.tlog
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\light controller.tlog\link-cvtres.read.1.tlog
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\light controller.tlog\link-cvtres.write.1.tlog
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\light controller.tlog\link-rc.read.1.tlog
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\light controller.tlog\link-rc.write.1.tlog
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\light controller.tlog\link.command.1.tlog
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\light controller.tlog\link.read.1.tlog
-c:\users\ercle\documents\projects\lightcontroller\light controller\debug\light controller.tlog\link.write.1.tlog
+c:\users\media\documents\github\lightcontroller\light controller\debug\vc140.pdb
+c:\users\media\documents\github\lightcontroller\light controller\debug\vc140.idb
+c:\users\media\documents\github\lightcontroller\light controller\debug\exception.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\lightnode.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\packet.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\bargraph.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\color.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\displayeffect.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\drawable.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\drawables.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\ledmatrix.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\recordingdevice.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\soundtocolor.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\stripmodes.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\serialport.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\spectrum.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\windowmanager.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\source.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\lightstrip.obj
+c:\users\media\documents\github\lightcontroller\light controller\debug\kiss_fft.obj
+c:\users\media\documents\github\lightcontroller\debug\light controller.pdb
+c:\users\media\documents\github\lightcontroller\light controller\debug\light controller.tlog\cl.command.1.tlog
+c:\users\media\documents\github\lightcontroller\light controller\debug\light controller.tlog\cl.read.1.tlog
+c:\users\media\documents\github\lightcontroller\light controller\debug\light controller.tlog\cl.write.1.tlog
+c:\users\media\documents\github\lightcontroller\light controller\debug\light controller.tlog\link-cvtres.read.1.tlog
+c:\users\media\documents\github\lightcontroller\light controller\debug\light controller.tlog\link-cvtres.write.1.tlog
+c:\users\media\documents\github\lightcontroller\light controller\debug\light controller.tlog\link-rc.read.1.tlog
+c:\users\media\documents\github\lightcontroller\light controller\debug\light controller.tlog\link-rc.write.1.tlog
+c:\users\media\documents\github\lightcontroller\light controller\debug\light controller.tlog\link.command.1.tlog
+c:\users\media\documents\github\lightcontroller\light controller\debug\light controller.tlog\link.read.1.tlog
+c:\users\media\documents\github\lightcontroller\light controller\debug\light controller.tlog\link.write.1.tlog

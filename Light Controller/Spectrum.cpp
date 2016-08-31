@@ -93,8 +93,8 @@ SpectrumAnalyzer::SpectrumAnalyzer(AudioDevice *audioDevice, double fStart, doub
 
 	inLCpx = inRCpx = outCpx = NULL;
 
-	ComputeHanningCoef(blockSize);
-	//ComputeBlackmanCoef(blockSize);
+	//ComputeHanningCoef(blockSize);
+	ComputeBlackmanCoef(blockSize);
 
 	inLCpx = (kiss_fft_cpx*)malloc(sizeof(kiss_fft_cpx) * blockSize);
 	inRCpx = (kiss_fft_cpx*)malloc(sizeof(kiss_fft_cpx) * blockSize);

@@ -1,13 +1,18 @@
-﻿  Source.cpp
-  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
-  - add -D_WIN32_WINNT=0x0501 to the compiler command line; or
-  - add _WIN32_WINNT=0x0501 to your project's Preprocessor Definitions.
-  Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target).
+﻿  SoundToColor.cpp
 c:\users\media\documents\github\lightcontroller\light controller\spectrum.h(37): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
-c:\users\media\documents\github\lightcontroller\light controller\source.cpp(90): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\media\documents\github\lightcontroller\light controller\source.cpp(130): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
-c:\users\media\documents\github\lightcontroller\light controller\source.cpp(175): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\media\documents\github\lightcontroller\light controller\source.cpp(70): warning C4101: 'timerFrequency': unreferenced local variable
-c:\users\media\documents\github\lightcontroller\light controller\source.cpp(68): warning C4101: 'comPort': unreferenced local variable
-c:\users\media\documents\github\lightcontroller\light controller\source.cpp(115): warning C4101: 'receiveByte': unreferenced local variable
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(82): warning C4018: '<': signed/unsigned mismatch
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(98): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(103): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(106): warning C4018: '<': signed/unsigned mismatch
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(71): warning C4101: 'b': unreferenced local variable
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(125): warning C4018: '<': signed/unsigned mismatch
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(152): warning C4018: '<': signed/unsigned mismatch
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(195): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(198): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(201): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(224): warning C4018: '<': signed/unsigned mismatch
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(264): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(293): warning C4018: '<': signed/unsigned mismatch
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(333): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\media\documents\github\lightcontroller\light controller\soundtocolor.cpp(339): warning C4305: 'argument': truncation from 'double' to 'float'
   Light Controller.vcxproj -> C:\Users\Media\Documents\GitHub\LightController\Debug\Light Controller.exe

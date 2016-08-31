@@ -72,19 +72,40 @@ void Color::Filter(Color c, float strength) {
 	strength = std::min(1.f, std::max(0.f, strength)); 
 
 	r = r*strength + c.GetRed()*(1 - strength);
+
 	g = g*strength + c.GetGreen()*(1 - strength);
+
 	b = b*strength + c.GetBlue()*(1 - strength);
 }
 
-byte Color::GetRed() {
+Color Color::SubFiler(Color c, float sub) {
+	if (c.r > r)
+		r = c.r;
+	else
+		r -= std::min(sub, (float)r - c.r);
+
+	if (c.g > g)
+		g = c.g;
+	else
+		g -= std::min(sub, (float)g - c.g);
+
+	if (c.b > b)
+		b = c.b;
+	else
+		b -= std::min(sub, (float)b - c.b);
+
+	return *this;
+}
+
+byte Color::GetRed() const {
 	return r;
 }
 
-byte Color::GetGreen() {
+byte Color::GetGreen() const {
 	return g;
 }
 
-byte Color::GetBlue() {
+byte Color::GetBlue() const {
 	return b;
 }
 

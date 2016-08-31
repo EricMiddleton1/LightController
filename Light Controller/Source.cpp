@@ -11,6 +11,8 @@
 #include "SoundToColor.h"
 #include "LEDMatrix.hpp"
 #include "DisplayEffect.hpp"
+#include "LightNode.hpp"
+#include "LightHub.hpp"
 
 #include <cmath>
 #include <iostream>
@@ -70,20 +72,22 @@ int main() {
 	__int64 timerFrequency;
 	std::string ipAddr;
 
+	/*
 	std::cout << "LightNode IP Address: ";
 	std::cin >> ipAddr;
 
 	boost::asio::ip::udp::socket socket(ioService);
 	boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::address::from_string(ipAddr), PORT_NUM);
+	*/
+
+	//LightNode nodeAnalog("Analog", boost::asio::ip::address().from_string("192.168.1.145"), 54924);
 
 	//SerialPort serialPort;
 	RecordingDevice recorder(4, 4092, 48000);
 	WindowManager window("LightControl", "Light Controller", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0);
-	
-	ledCount = InitStrip(socket, endpoint);
 
-	StripModeDissipate stripMode(ledCount, 10, 50);
-	StripModeSolid solidMode(ledCount, Color(0, 0, 0));
+	//StripModeDissipate stripMode(ledCount, 10, 50);
+	StripModeSolid solidMode(1, Color(0, 0, 0));
 
 	Background background(Color(0, 0, 0));
 	SpectrumAnalyzer spectrum(&recorder, 30., 20000., 3);
@@ -105,6 +109,35 @@ int main() {
 
 	//LightStrip display(32 * 24);
 	LEDMatrix display(32, 24);
+
+	LightNode *nodeAnalog = NULL, *nodeMatrix = NULL, *edge = NULL;
+
+	LightHub hub(54923, 54924, LightHub::BROADCAST);
+
+	hub.addListener(LightHub::NODE_DISCOVER, [&nodeAnalog, &nodeMatrix, &edge](std::shared_ptr<LightNode> node) {
+		std::cout << "[Info] New light node discovered: " << node->getName() << std::endl;
+
+		node->addListener(LightNode::STATE_CHANGE, [&nodeAnalog, &nodeMatrix, &edge](LightNode* node, LightNode::State_e old, LightNode::State_e newState) {
+			if (newState != LightNode::CONNECTED)
+				return;
+
+			auto strip = node->getLightStrip();
+
+			if (strip.GetSize() == 5) {
+				std::cout << "[Info] Analog strip connected" << std::endl;
+				nodeAnalog = node;
+			}
+			else if (strip.GetSize() == 24 * 32) {
+				std::cout << "[Info] LED Matrix connected" << std::endl;
+				nodeMatrix = node;
+			}
+			else if (strip.GetSize() == (2 * 66 + 2 * 37)) {
+				std::cout << "[Info] Edge light connected" << std::endl;
+				edge = node;
+			}
+			node->releaseLightStrip();
+		});
+	});
 	
 	double xPos = display.getWidth() / 2;
 	double xDir = 0;// 0.5;
@@ -114,72 +147,67 @@ int main() {
 		
 		unsigned char receiveByte;
 
-		stripMode.PushColors(soundColor.GetLeftColor(), soundColor.GetRightColor());
-		solidMode.SetColor(soundColor.GetMonoColor());
+		//stripMode.PushColors(soundColor.GetLeftColor(), soundColor.GetRightColor());
+		//solidMode.SetColor(soundColor.GetMonoColor());
 		//solidMode.SetColor(Color(255, 0, 0));
 
 		window.Update();
-
-		//UpdateStrip(socket, endpoint, stripMode, ledCount);
-		//UpdateStrip(socket, endpoint, solidMode.GetStrip(), ledCount);
 
 		//Update graph
 		auto values = soundColor.getGraph()->getValues();
 		auto colors = soundColor.getGraph()->getColors();
 
-		updateDisplay(display, soundColor.GetMonoColor(), xPos, display.getHeight()/2, true);
-		//renderField(display, soundColor.GetMonoColor(), xPos, display.getHeight() / 2);
+		//updateDisplay(display, soundColor.GetMonoColor(), xPos, display.getHeight()/2, true);
 
-		xPos += xDir;
+		//std::cout << "[Info] " << hub.getNodeCount() << " connected nodes" << std::endl;
 
-		if (xPos >= display.getWidth()*3/4 || xPos < display.getWidth()/4) {
-			xDir *= -1;
+		if (nodeAnalog != NULL) {
+			//auto strip = nodeAnalog->getLightStrip();
+
+			nodeAnalog->getLightStrip().Set(0, soundColor.GetLeftColor());
+			nodeAnalog->releaseLightStrip();
+
+			nodeAnalog->getLightStrip().Set(1, soundColor.GetCenterColor());
+			nodeAnalog->releaseLightStrip();
+
+			nodeAnalog->getLightStrip().Set(2, soundColor.GetRightColor());
+			nodeAnalog->releaseLightStrip();
+
+			/*
+			nodeAnalog->getLightStrip().SetAll(Color(0, 255, 0));
+			nodeAnalog->releaseLightStrip();
+			*/
+
+			/*
+			strip.Set(0, soundColor.GetMonoColor());
+			strip.Set(1, soundColor.GetMonoColor());
+			strip.Set(2, soundColor.GetMonoColor());
+			*/
+
+			//nodeAnalog->releaseLightStrip();
+
+			nodeAnalog->update();
 		}
 
-		/*
-		display.clear();
+		if (edge != NULL) {
+			//edge->getLightStrip().SetAll(soundColor.GetMonoColor());
+			edge->getLightStrip().SetAll(soundColor.GetBassColor());
+			edge->releaseLightStrip();
 
-		for (int x = 0; x < values.size(); x += 3) {
-			double top = 0;
-
-			int max = std::min((int)values.size(), x + 3);
-			for (int temp = x; temp < max; temp++) {
-				top += std::max(23 - (values[temp - (temp % 2)] + 70) * 0.4, 0.);
-			}
-
-			top /= (max - x);
-
-			if (top < 0)
-				top = 0;
-
-			for (int i = 0; i < 2; ++i) {
-				int xx = x + i;
-				int scrX = xx + 2;
-
-				//auto raw = colors[x];
-
-				auto raw = Color::HSV(240.f * ((1. + x) / values.size()), 1.f, 1.f).gammaCorrected();
-
-				for (int y = 23; y >= top; y--) {
-					//int index = (y % 2) ? (32 * y + 31 - scrX) : (32 * y + scrX);
-					//display.Set(index, c);
-					display.setPixel(scrX, y, raw);
-				}
-			}
+			edge->update();
 		}
-		*/
 
-		UpdateStrip(socket, endpoint, display.getStrip().get(), 32 * 24);
+		if (nodeMatrix != NULL) {
+			updateDisplay(display, soundColor.GetMatrixColor(), xPos, display.getHeight() / 2, true);
 
-		hue += 1.;
-		hue = std::fmod(hue, 360.);
+			nodeMatrix->getLightStrip() = *display.getStrip();
+			nodeMatrix->releaseLightStrip();
+
+			nodeMatrix->update();
+		}
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(20));
-
-		//Color::HSV(hue, 1, 1).Print();
 	}
-
-//	delete[] stripData;
 }
 
 int InitStrip(boost::asio::ip::udp::socket& socket, boost::asio::ip::udp::endpoint& endpoint) {

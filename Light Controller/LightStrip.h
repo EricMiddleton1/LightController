@@ -8,7 +8,7 @@
 class LightStrip
 {
 public:
-	LightStrip() {};
+	LightStrip();
 	LightStrip(int count);
 	~LightStrip();
 
@@ -23,6 +23,7 @@ public:
 
 	int GetSize();
 	Color GetColor(int id);
+	std::vector<Color>& getPixels();
 
 	void DumpColors(unsigned char colorArray[]);
 

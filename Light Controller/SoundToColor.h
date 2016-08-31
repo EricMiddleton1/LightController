@@ -22,6 +22,7 @@ public:
 	Color GetMonoColor() const;
 	Color GetCenterColor() const;
 	Color GetBassColor() const;
+	Color GetMatrixColor() const;
 
 	void SetCallback(StCCallback cb);
 
@@ -32,8 +33,9 @@ public:
 protected:
 	void SpectrumCallback(std::vector<FrequencyBin> const& lFreq, std::vector<FrequencyBin> const& rFreq);
 	
-	Color RenderColor(const std::vector<FrequencyBin>& bins) const;
-	Color RenderBassColor(const std::vector<FrequencyBin>& bins) const;
+	void RenderColor(Color &color, const std::vector<FrequencyBin>& bins, double multiplier = 1.) const;
+	void RenderMatrixColor(Color &color, const std::vector<FrequencyBin>& bins, double multiplier = 1.) const;
+	void RenderBassColor(Color& color, const std::vector<FrequencyBin>& bins) const;
 	void SetColors();
 	double AverageDB(const std::vector<FrequencyBin>& spectrum) const;
 
@@ -42,7 +44,7 @@ protected:
 	StCCallback cb;
 	std::unique_ptr<BarGraph> graph;
 
-	Color leftColor, rightColor, monoColor, centerColor, bassColor;
+	Color leftColor, rightColor, monoColor, centerColor, bassColor, matrixColor;
 	std::vector<Color> frequencyColors;
 	
 	double filterStrength;

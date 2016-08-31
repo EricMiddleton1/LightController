@@ -22,7 +22,7 @@ void updateDisplay(LEDMatrix& display, const Color& c, uint8_t xPos, uint8_t yPo
 	for (int y = 0; y < display.getHeight(); y++) {
 		for (int x = 0; x < display.getWidth(); x++) {
 			int distX = (x -xPos), distY = (y - yPos);
-			int dist = std::sqrt(distX*distX + distY*distY);
+			int dist = std::sqrt(distX*distX + distY*distY) + 0.5;
 
 			int colorIndex = explode ? (display.getWidth() - dist - 1) : dist;
 
@@ -46,8 +46,8 @@ void renderField(LEDMatrix& display, const Color& c, uint8_t xPos, uint8_t yPos)
 			GetAdjacentCoordinate(dirX, dirY, coordX, coordY);
 
 			//Convert to screen coordinates
-			coordX = std::min(display.getWidth() - 1, std::max(0, x + coordX));
-			coordY = std::min(display.getHeight() - 1, std::max(0, y + coordY));
+			coordX = min(display.getWidth() - 1, max(0, x + coordX));
+			coordY = min(display.getHeight() - 1, max(0, y + coordY));
 
 			//Update new pixel
 			Color c = copy.getPixel(coordX, coordY);
@@ -94,4 +94,55 @@ void GetAdjacentCoordinate(int dirX, int dirY, int& coordX, int& coordY) {
 		coordX = -1;
 		coordY = -1;
 	}
+}
+
+void mirrorDisplay(LEDMatrix& display) {
+	HDC      dcDesktop;
+	HDC         dcMem;
+	HBITMAP     hbmpMem;
+	HBITMAP     hOriginal;
+	BITMAP      bmpDesktopCopy;
+	int scrWidth, scrHeight;
+
+	scrWidth = 1920;
+	scrHeight = 1080;
+
+	dcDesktop = GetDC(GetDesktopWindow());
+	dcMem = CreateCompatibleDC(dcDesktop);
+	hbmpMem = CreateCompatibleBitmap(dcDesktop, scrWidth, scrHeight);
+	SelectObject(dcMem, hbmpMem);
+
+	BitBlt(dcMem, 0, 0, scrWidth, scrHeight, dcDesktop, 0, 0, SRCCOPY | CAPTUREBLT);
+
+	// Copy the hbmpMem to the desktop copy
+	GetObject(hbmpMem, sizeof(BITMAP), (LPSTR)&bmpDesktopCopy);
+
+	HBITMAP bitmapScaled;
+	HDC scaledDC;
+
+	scaledDC = CreateCompatibleDC(dcDesktop);
+	bitmapScaled = CreateCompatibleBitmap(dcDesktop, display.getWidth(), display.getHeight());
+	SelectObject(scaledDC, bitmapScaled);
+
+	StretchBlt(scaledDC, 0, 0, display.getWidth(), display.getHeight(), dcMem, 0, 0, scrWidth, scrHeight, SRCCOPY);
+
+	for (int y = 0; y < display.getHeight(); y++) {
+		for (int x = 0; x < display.getWidth(); x++) {
+			uint32_t color = GetPixel(scaledDC, x, y);
+
+			Color c(color & 0xFF,
+				(color >> 8) & 0xFF,
+				(color >> 16) & 0xFF);
+
+			display.setPixel(x, y, c);
+		}
+	}
+
+	DeleteObject(bitmapScaled);
+	DeleteObject(dcMem);
+
+	DeleteDC(scaledDC);
+	DeleteDC(dcMem);
+
+	ReleaseDC(GetDesktopWindow(), dcDesktop);
 }

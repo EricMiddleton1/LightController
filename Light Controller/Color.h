@@ -20,10 +20,11 @@ public:
 
 	void Scale(float scale);
 	void Filter(Color c, float strength);
+	Color SubFiler(Color c, float sub);
 
-	byte GetRed();
-	byte GetGreen();
-	byte GetBlue();
+	byte GetRed() const;
+	byte GetGreen() const;
+	byte GetBlue() const;
 
 	Color gammaCorrected();
 

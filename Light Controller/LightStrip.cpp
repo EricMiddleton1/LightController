@@ -1,5 +1,10 @@
 #include "LightStrip.h"
 
+
+LightStrip::LightStrip()
+	: size{ 0 } {
+}
+
 LightStrip::LightStrip(int count) {
 	if (count < 1)
 		throw(Exception("LightStrip count must be greater than 0"));
@@ -53,6 +58,10 @@ Color LightStrip::GetColor(int id) {
 		throw(Exception("LightStrip GetColor() id must be between 0 and " + size));
 
 	return colors[id];
+}
+
+std::vector<Color>& LightStrip::getPixels() {
+	return colors;
 }
 
 int LightStrip::GetSize() {
